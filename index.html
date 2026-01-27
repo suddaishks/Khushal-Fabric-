@@ -213,34 +213,37 @@
         updateCartDisplay();
     }
 
-            const list = document.getElementById('cartItemsList');
-        let total = 0, count = 0;
-        
-        if (cart.length === 0) {
-            list.innerHTML = '<div class="text-center py-5"><i class="fas fa-shopping-cart fa-3x mb-3 text-muted"></i><p>آپ کا کارڈ خالی ہے!</p></div>';
-            document.getElementById('totalPrice').innerText = '0';
-            document.getElementById('cart-count').innerText = '0';
-        } else {
-            list.innerHTML = '';
-            cart.forEach((item, index) => {
-                total += item.price * item.qty;
-                count += item.qty;
-                list.innerHTML += `
-                    <div class="mb-3 border-bottom pb-2">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold small">${item.name}</span>
-                            <span class="small">Rs. ${item.price * item.qty}</span>
-                        </div>
-                        <div class="mt-2">
-                            <button class="btn btn-sm btn-light" onclick="changeQty(${index}, -1)">-</button>
-                            <span class="mx-2">${item.qty}</span>
-                            <button class="btn btn-sm btn-light" onclick="changeQty(${index}, 1)">+</button>
-                        </div>
-                    </div>`;
-            });
-            document.getElementById('totalPrice').innerText = total;
-            document.getElementById('cart-count').innerText = count;
-        }
+            function updateCartDisplay() {
+    const list = document.getElementById('cartItemsList');
+    let total = 0, count = 0;
+    
+    if (cart.length === 0) {
+        list.innerHTML = '<div class="text-center py-5"><i class="fas fa-shopping-cart fa-3x mb-3 text-muted"></i><p>آپ کا کارڈ خالی ہے!</p></div>';
+        document.getElementById('totalPrice').innerText = '0';
+        document.getElementById('cart-count').innerText = '0';
+    } else {
+        list.innerHTML = '';
+        cart.forEach((item, index) => {
+            total += item.price * item.qty;
+            count += item.qty;
+            list.innerHTML += `
+                <div class="mb-3 border-bottom pb-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold small">${item.name}</span>
+                        <span class="small">Rs. ${item.price * item.qty}</span>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-light" onclick="changeQty(${index}, -1)">-</button>
+                        <span class="mx-2">${item.qty}</span>
+                        <button class="btn btn-sm btn-light" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                </div>`;
+        });
+        document.getElementById('totalPrice').innerText = total;
+        document.getElementById('cart-count').innerText = count;
+    }
+}
+
 
 
     function changeQty(index, amount) {
