@@ -96,7 +96,13 @@
         <div class="col-md-4 col-6 product-item alkaram">
             <div class="product-card">
                 <div class="badge-sale" style="background: #ff0000;">30% OFF</div>
-                <img src="suite1.jpg" alt="Suit 1" onclick="openProduct('LAURE Digital Printed', 'یہ بہترین کوالٹی کا کپڑا ہے، مختلف رنگوں میں دستیاب ہے۔', ['suite1.jpg', 'suite2.jpg', 'suite3.jpg'])" style="cursor:pointer;">
+                <img src="suite1.jpg" alt="Suit 1" style="cursor:pointer;" 
+     onclick="openProduct('LAURE Digital Printed', [
+        {color: 'White', price: 3143, image: 'white_suit.jpg'},
+        {color: 'Black', price: 3143, image: 'black_suit.jpg'},
+        {color: 'Blue', price: 3143, image: 'blue_suit.jpg'}
+     ])">
+
 
                 <div class="product-body">
                     <h6>LAURE Digital Printed</h6>
@@ -278,19 +284,26 @@
         window.open(`https://wa.me/923490162829?text=${msg}`, '_blank');
     }
 
-function openProduct(name, desc, imageList) {
-    document.getElementById('modalTitle').innerText = name;
-    document.getElementById('modalDesc').innerText = desc;
+function openProduct(productName, details) {
+    document.getElementById('modalTitle').innerText = productName;
     let imgHTML = '';
-    imageList.forEach(img => {
-        imgHTML += `<img src="${img}" style="width:100%; max-width:250px; border:2px solid gold; border-radius:10px;">`;
+    
+    // یہاں ہم ہر رنگ کے لیے الگ بٹن اور تصویر بنائیں گے
+    details.forEach(item => {
+        imgHTML += `
+            <div style="border:1px solid #444; padding:10px; margin-bottom:15px; border-radius:10px; background:#1a1a1a;">
+                <img src="${item.image}" style="width:100%; max-width:200px; border-radius:5px;">
+                <h5 style="margin-top:10px;">رنگ: ${item.color}</h5>
+                <p>قیمت: Rs. ${item.price}</p>
+                <button onclick="addToCart('${productName} (${item.color})', ${item.price}); closeModal();" 
+                        style="background:gold; color:black; border:none; padding:8px 15px; font-weight:bold; cursor:pointer; border-radius:5px;">
+                    یہ والا کارڈ میں ڈالیں (Add ${item.color})
+                </button>
+            </div>`;
     });
+    
     document.getElementById('modalImages').innerHTML = imgHTML;
     document.getElementById('productModal').style.display = 'block';
-}
-
-function closeModal() {
-    document.getElementById('productModal').style.display = 'none';
 }
 
     
