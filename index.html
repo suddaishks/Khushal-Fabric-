@@ -3,55 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khushal Fabric - Premium Collection</title>
+    <title>Khushal Fabric - Ultimate Store</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #fcfcfc; overflow-x: hidden; }
-        .navbar { box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .navbar-brand { font-weight: bold; color: #d81b60 !important; font-size: 1.5rem; }
-        
-        /* Filter Styling */
-        .filter-container { background: white; padding: 15px; text-align: center; position: sticky; top: 60px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow-x: auto; white-space: nowrap; }
-        .filter-btn { border: 2px solid #d81b60; background: transparent; color: #d81b60; padding: 6px 22px; margin: 5px; border-radius: 30px; font-weight: 600; transition: 0.3s; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; }
+        .navbar-brand { font-weight: bold; color: #d81b60 !important; }
+
+        /* Popup Message Style */
+        #cart-popup {
+            display: none; position: fixed; top: 80px; right: 20px; z-index: 9999;
+            background: #25d366; color: white; padding: 12px 25px; border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: 600;
+        }
+
+        /* Responsive Filters */
+        .filter-container { background: white; padding: 15px; text-align: center; position: sticky; top: 60px; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow-x: auto; white-space: nowrap; }
+        .filter-btn { border: 2px solid #d81b60; background: transparent; color: #d81b60; padding: 5px 15px; margin: 3px; border-radius: 30px; font-weight: 600; font-size: 13px; cursor: pointer; }
         .filter-btn.active { background: #d81b60; color: white; }
 
-        /* Card & Slider Styling */
-        .brand-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: none; height: 100%; position: relative; }
-        .carousel-item img { height: 400px; object-fit: cover; width: 100%; }
+        /* Product Cards Grid */
+        .brand-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: none; height: 100%; transition: 0.3s; position: relative; }
+        .carousel-item img { height: 260px; object-fit: cover; width: 100%; }
         
-        .pdf-link { position: absolute; top: 15px; left: 15px; background: rgba(216, 27, 96, 0.9); color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; z-index: 10; text-decoration: none; font-weight: bold; }
-        
-        .card-body { padding: 20px; text-align: center; }
-        .price-tag { color: #d81b60; font-size: 1.3rem; font-weight: bold; }
-        .brand-name { font-weight: 700; color: #333; margin-bottom: 5px; text-transform: uppercase; }
+        .pdf-badge { position: absolute; top: 10px; left: 10px; background: rgba(216, 27, 96, 0.9); color: white; padding: 3px 10px; border-radius: 15px; font-size: 10px; z-index: 10; text-decoration: none; font-weight: bold; }
 
-        /* Cart Panel */
-        #cartPanel { display:none; position:fixed; right:0; top:0; height:100%; width:380px; background: white; z-index: 2000; box-shadow: -5px 0 30px rgba(0,0,0,0.2); padding: 25px; overflow-y:auto; }
+        .price-tag { color: #d81b60; font-size: 1.1rem; font-weight: bold; }
+        .brand-name { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; text-transform: uppercase; color: #333; }
+
+        /* Cart Side Panel */
+        #cartPanel { display:none; position:fixed; right:0; top:0; height:100%; width:380px; background: white; z-index: 3000; box-shadow: -5px 0 30px rgba(0,0,0,0.2); padding: 25px; overflow-y:auto; }
+        .qty-control { display: flex; align-items: center; border: 1px solid #eee; border-radius: 5px; overflow: hidden; }
+        .qty-btn { width: 30px; height: 30px; background: #f8f9fa; border: none; font-weight: bold; }
+        
         .whatsapp-btn { position: fixed; bottom: 30px; left: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         
-        @media (max-width: 576px) { .carousel-item img { height: 320px; } #cartPanel { width: 100%; } }
+        @media (max-width: 576px) { 
+            #cartPanel { width: 100%; } 
+            .col-6 { padding: 4px; } /* Mobile grid optimization */
+            .carousel-item img { height: 220px; }
+        }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+<div id="cart-popup"><i class="fa fa-check-circle me-2"></i> Added to Bag!</div>
+
+<nav class="navbar navbar-light bg-white sticky-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="#">KHUSHAL FABRIC</a>
+        <a class="navbar-brand">KHUSHAL FABRIC</a>
         <div class="ms-auto">
             <a class="nav-link position-relative" href="javascript:void(0)" onclick="toggleCart()">
                 <i class="fa fa-shopping-bag fs-4"></i>
-                <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                <span id="cart-count" class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">0</span>
             </a>
         </div>
     </div>
 </nav>
 
 <div class="filter-container">
-    <button class="filter-btn active" onclick="filterBrands('all', this)">All Brands</button>
+    <button class="filter-btn active" onclick="filterBrands('all', this)">All</button>
     <button class="filter-btn" onclick="filterBrands('lawn', this)">Lawn Trouser</button>
     <button class="filter-btn" onclick="filterBrands('mizaj', this)">Mizaj</button>
     <button class="filter-btn" onclick="filterBrands('jacquard', this)">Jacquard</button>
@@ -62,123 +76,122 @@
     <button class="filter-btn" onclick="filterBrands('saya', this)">Saya</button>
 </div>
 
-<div class="container my-5">
-    <div class="row g-4" id="brandGrid">
+<div class="container-fluid px-3 my-4">
+    <div class="row g-2 g-md-4" id="brandGrid">
         
-        <div class="col-md-6 col-lg-4 brand-item lawn">
+        <div class="col-6 col-md-4 col-lg-3 brand-item lawn">
             <div class="brand-card">
                 <div id="slideLawn" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active"><img src="lawn1.jpg"></div>
                         <div class="carousel-item"><img src="lawn2.jpg"></div>
                     </div>
-                    <button class="carousel-control-prev" data-bs-target="#slideLawn" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                    <button class="carousel-control-next" data-bs-target="#slideLawn" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                 </div>
-                <div class="card-body">
-                    <h5 class="brand-name">Lawn Trouser</h5>
-                    <div class="price-tag mb-3">Rs. 1,200</div>
-                    <div class="input-group"><input type="text" id="in-lawn" class="form-control" placeholder="Color/Size"><button class="btn btn-success" onclick="addItem('Lawn Trouser', 1200, 'in-lawn')">Add</button></div>
+                <div class="p-2 text-center">
+                    <h6 class="brand-name">Lawn Trouser</h6>
+                    <div class="price-tag mb-2">Rs. 1200</div>
+                    <input type="text" id="in-lawn" class="form-control form-control-sm mb-1" placeholder="Color/Size">
+                    <button class="btn btn-success btn-sm w-100" onclick="addItem('Lawn Trouser', 1200, 'in-lawn')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 brand-item mizaj">
+        <div class="col-6 col-md-4 col-lg-3 brand-item mizaj">
             <div class="brand-card">
                 <div id="slideMizaj" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner"><div class="carousel-item active"><img src="mizaj1.jpg"></div></div>
-                    <button class="carousel-control-next" data-bs-target="#slideMizaj" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                 </div>
-                <div class="card-body">
-                    <h5 class="brand-name">Mizaj Shirt</h5>
-                    <div class="price-tag mb-3">Rs. 1,850</div>
-                    <div class="input-group"><input type="text" id="in-mizaj" class="form-control" placeholder="Design Name"><button class="btn btn-success" onclick="addItem('Mizaj', 1850, 'in-mizaj')">Add</button></div>
+                <div class="p-2 text-center">
+                    <h6 class="brand-name">Mizaj Shirt</h6>
+                    <div class="price-tag mb-2">Rs. 1850</div>
+                    <input type="text" id="in-mizaj" class="form-control form-control-sm mb-1" placeholder="Design">
+                    <button class="btn btn-success btn-sm w-100" onclick="addItem('Mizaj', 1850, 'in-mizaj')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 brand-item jacquard">
+        <div class="col-6 col-md-4 col-lg-3 brand-item jacquard">
             <div class="brand-card">
                 <div id="slideJac" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner"><div class="carousel-item active"><img src="jac1.jpg"></div></div>
-                    <button class="carousel-control-next" data-bs-target="#slideJac" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                 </div>
-                <div class="card-body">
-                    <h5 class="brand-name">Jacquard Collection</h5>
-                    <div class="price-tag mb-3">Rs. 3,200</div>
-                    <div class="input-group"><input type="text" id="in-jac" class="form-control" placeholder="Design No."><button class="btn btn-success" onclick="addItem('Jacquard', 3200, 'in-jac')">Add</button></div>
+                <div class="p-2 text-center">
+                    <h6 class="brand-name">Jacquard</h6>
+                    <div class="price-tag mb-2">Rs. 3200</div>
+                    <input type="text" id="in-jac" class="form-control form-control-sm mb-1" placeholder="Design No.">
+                    <button class="btn btn-success btn-sm w-100" onclick="addItem('Jacquard', 3200, 'in-jac')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 brand-item binsaeed">
+        <div class="col-6 col-md-4 col-lg-3 brand-item binsaeed">
             <div class="brand-card">
+                <a href="binsaeed.pdf" target="_blank" class="pdf-badge">PDF</a>
                 <div id="slideBS" class="carousel slide" data-bs-ride="carousel">
-                    <a href="binsaeed.pdf" target="_blank" class="pdf-link">PDF CATALOG</a>
                     <div class="carousel-inner"><div class="carousel-item active"><img src="bs1.jpg"></div></div>
-                    <button class="carousel-control-next" data-bs-target="#slideBS" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                 </div>
-                <div class="card-body">
-                    <h5 class="brand-name">Bin Saeed</h5>
-                    <div class="price-tag mb-3">Rs. 2,600</div>
-                    <div class="input-group"><input type="text" id="in-bs" class="form-control" placeholder="Design No."><button class="btn btn-success" onclick="addItem('Bin Saeed', 2600, 'in-bs')">Add</button></div>
+                <div class="p-2 text-center">
+                    <h6 class="brand-name">Bin Saeed</h6>
+                    <div class="price-tag mb-2">Rs. 2600</div>
+                    <input type="text" id="in-bs" class="form-control form-control-sm mb-1" placeholder="Design No.">
+                    <button class="btn btn-success btn-sm w-100" onclick="addItem('Bin Saeed', 2600, 'in-bs')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 brand-item alkaram">
+        <div class="col-6 col-md-4 col-lg-3 brand-item alkaram">
             <div class="brand-card">
                 <div id="slideAlk" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner"><div class="carousel-item active"><img src="alk1.jpg"></div></div>
-                    <button class="carousel-control-next" data-bs-target="#slideAlk" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                 </div>
-                <div class="card-body">
-                    <h5 class="brand-name">Alkaram Digital</h5>
-                    <div class="price-tag mb-3">Rs. 2,450</div>
-                    <div class="input-group"><input type="text" id="in-alk" class="form-control" placeholder="Design No."><button class="btn btn-success" onclick="addItem('Alkaram', 2450, 'in-alk')">Add</button></div>
+                <div class="p-2 text-center">
+                    <h6 class="brand-name">Alkaram Digital</h6>
+                    <div class="price-tag mb-2">Rs. 2450</div>
+                    <input type="text" id="in-alk" class="form-control form-control-sm mb-1" placeholder="Design No.">
+                    <button class="btn btn-success btn-sm w-100" onclick="addItem('Alkaram', 2450, 'in-alk')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 brand-item mtj">
+        <div class="col-6 col-md-4 col-lg-3 brand-item mtj">
             <div class="brand-card">
+                <a href="mtj.pdf" target="_blank" class="pdf-badge">PDF</a>
                 <div id="slideMTJ" class="carousel slide" data-bs-ride="carousel">
-                    <a href="mtj.pdf" target="_blank" class="pdf-link">PDF CATALOG</a>
                     <div class="carousel-inner"><div class="carousel-item active"><img src="mtj1.jpg"></div></div>
-                    <button class="carousel-control-next" data-bs-target="#slideMTJ" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                 </div>
-                <div class="card-body">
-                    <h5 class="brand-name">MTJ BY MTJ</h5>
-                    <div class="price-tag mb-3">Rs. 2,350</div>
-                    <div class="input-group"><input type="text" id="in-mtj" class="form-control" placeholder="Design No."><button class="btn btn-success" onclick="addItem('MTJ', 2350, 'in-mtj')">Add</button></div>
+                <div class="p-2 text-center">
+                    <h6 class="brand-name">MTJ BY MTJ</h6>
+                    <div class="price-tag mb-2">Rs. 2350</div>
+                    <input type="text" id="in-mtj" class="form-control form-control-sm mb-1" placeholder="Color/No.">
+                    <button class="btn btn-success btn-sm w-100" onclick="addItem('MTJ', 2350, 'in-mtj')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 brand-item jdot">
+        <div class="col-6 col-md-4 col-lg-3 brand-item jdot">
             <div class="brand-card">
                 <div id="slideJ" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner"><div class="carousel-item active"><img src="j1.jpg"></div></div>
-                    <button class="carousel-control-next" data-bs-target="#slideJ" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                 </div>
-                <div class="card-body">
-                    <h5 class="brand-name">J. Junaid Jamshed</h5>
-                    <div class="price-tag mb-3">Rs. 2,900</div>
-                    <div class="input-group"><input type="text" id="in-j" class="form-control" placeholder="Design No."><button class="btn btn-success" onclick="addItem('J.', 2900, 'in-j')">Add</button></div>
+                <div class="p-2 text-center">
+                    <h6 class="brand-name">J. Digital</h6>
+                    <div class="price-tag mb-2">Rs. 2900</div>
+                    <input type="text" id="in-j" class="form-control form-control-sm mb-1" placeholder="Design No.">
+                    <button class="btn btn-success btn-sm w-100" onclick="addItem('J.', 2900, 'in-j')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 brand-item saya">
+        <div class="col-6 col-md-4 col-lg-3 brand-item saya">
             <div class="brand-card">
                 <div id="slideSaya" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner"><div class="carousel-item active"><img src="saya1.jpg"></div></div>
-                    <button class="carousel-control-next" data-bs-target="#slideSaya" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                 </div>
-                <div class="card-body">
-                    <h5 class="brand-name">Saya Collection</h5>
-                    <div class="price-tag mb-3">Rs. 2,250</div>
-                    <div class="input-group"><input type="text" id="in-saya" class="form-control" placeholder="Design No."><button class="btn btn-success" onclick="addItem('Saya', 2250, 'in-saya')">Add</button></div>
+                <div class="p-2 text-center">
+                    <h6 class="brand-name">Saya Collection</h6>
+                    <div class="price-tag mb-2">Rs. 2250</div>
+                    <input type="text" id="in-saya" class="form-control form-control-sm mb-1" placeholder="Design No.">
+                    <button class="btn btn-success btn-sm w-100" onclick="addItem('Saya', 2250, 'in-saya')">Add to Bag</button>
                 </div>
             </div>
         </div>
@@ -188,100 +201,127 @@
 
 <div id="cartPanel">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4>Shopping Bag</h4>
+        <h4 class="mb-0">Shopping Bag</h4>
         <button class="btn-close" onclick="toggleCart()"></button>
     </div>
-    <div id="cartItemsList"></div>
-    <hr>
-    <div class="fw-bold fs-5 mb-3">Total: Rs. <span id="totalPrice">0</span></div>
-    <input type="text" id="custName" class="form-control mb-2" placeholder="Full Name">
-    <textarea id="custAddr" class="form-control mb-3" placeholder="Full Address"></textarea>
-    <button class="btn btn-success w-100 py-3 fw-bold" onclick="sendWhatsApp()">CONFIRM ORDER VIA WHATSAPP</button>
+    <div id="cartList"></div>
+    <div id="empty-msg" class="text-center py-5 text-muted">
+        <i class="fa fa-shopping-basket fa-3x mb-3"></i>
+        <p>Your Bag is empty!</p>
+    </div>
+    <div id="cart-footer" style="display:none;">
+        <hr>
+        <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+            <span>Total:</span><span>Rs. <span id="totalPrice">0</span></span>
+        </div>
+        <div class="bg-light p-3 rounded mb-3">
+            <input type="text" id="custName" class="form-control mb-2" placeholder="Full Name">
+            <textarea id="custAddr" class="form-control" placeholder="Complete Address"></textarea>
+        </div>
+        <button class="btn btn-success w-100 py-3 fw-bold shadow" onclick="sendWhatsApp()">CONFIRM ON WHATSAPP</button>
+    </div>
 </div>
 
 <footer class="bg-dark text-white pt-5 pb-3">
-    <div class="container">
-        <div class="row text-center text-md-start">
+    <div class="container text-center text-md-start">
+        <div class="row">
             <div class="col-md-4 mb-4">
-                <h5 class="fw-bold">ABOUT KHUSHAL FABRIC</h5>
-                <p class="small text-secondary">Curating the latest trends in unstitched fashion. Quality fabrics delivered to your doorstep. Managed by HKS.</p>
+                <h6 class="fw-bold mb-3">ABOUT US</h6>
+                <p class="small text-secondary">Premium unstitched collection for the modern woman. Quality guaranteed. Managed by HKS.</p>
             </div>
             <div class="col-md-4 mb-4">
-                <h5 class="fw-bold">CONTACT INFO</h5>
-                <p class="small mb-1 text-secondary"><i class="fa fa-phone me-2"></i> 03490162829</p>
-                <p class="small mb-1 text-secondary"><i class="fa fa-envelope me-2"></i> ww2072809@gmail.com</p>
-                <p class="small text-secondary"><i class="fa fa-location-dot me-2"></i> Al Karam kapra gali, Zam Zam Market, Karachi</p>
+                <h6 class="fw-bold mb-3">CONTACT</h6>
+                <p class="small text-secondary mb-1"><i class="fa fa-phone me-2"></i> 03490162829</p>
+                <p class="small text-secondary mb-1"><i class="fa fa-location-dot me-2"></i> Zam Zam Market, Karachi</p>
             </div>
             <div class="col-md-4 mb-4 text-center">
-                <h5 class="fw-bold">FOLLOW US</h5>
-                <div class="mt-3">
-                    <a href="#" class="text-white mx-2 fs-4"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-white mx-2 fs-4"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-white mx-2 fs-4"><i class="fab fa-tiktok"></i></a>
-                </div>
+                <h6 class="fw-bold mb-3">FOLLOW</h6>
+                <div class="fs-4"><i class="fab fa-facebook mx-2"></i><i class="fab fa-instagram mx-2"></i><i class="fab fa-tiktok mx-2"></i></div>
             </div>
         </div>
         <hr class="bg-secondary">
-        <div class="text-center">
-            <p class="small mb-0 text-secondary">&copy; 2026 Khushal Fabric. All Rights Reserved.</p>
-        </div>
+        <p class="small mb-0 text-secondary text-center">&copy; 2026 Khushal Fabric. All Rights Reserved.</p>
     </div>
 </footer>
 
-<a href="https://wa.me/923490162829" class="whatsapp-btn text-decoration-none" target="_blank"><i class="fab fa-whatsapp"></i></a>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<a href="https://wa.me/923490162829" class="whatsapp-btn"><i class="fab fa-whatsapp"></i></a>
 
 <script>
     let cart = [];
 
-    function filterBrands(brand, btn) {
-        document.querySelectorAll('.brand-item').forEach(item => {
-            item.style.display = (brand === 'all' || item.classList.contains(brand)) ? 'block' : 'none';
-        });
+    function filterBrands(cat, btn) {
+        document.querySelectorAll('.brand-item').forEach(i => i.style.display = (cat === 'all' || i.classList.contains(cat)) ? 'block' : 'none');
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
 
     function addItem(name, price, inputId) {
         let detail = document.getElementById(inputId).value;
-        if(!detail) { alert("Please enter color/design from images!"); return; }
-        cart.push({ title: name + " (" + detail + ")", price: price });
+        if(!detail) { alert("Please enter color/design!"); return; }
+        
+        let fullTitle = name + " (" + detail + ")";
+        let exists = cart.find(i => i.title === fullTitle);
+        
+        if(exists) { exists.qty++; } 
+        else { cart.push({ title: fullTitle, price: price, qty: 1 }); }
+        
         document.getElementById(inputId).value = '';
-        updateCart();
-        alert("Added to Bag!");
+        showPopup();
+        updateUI();
     }
 
-    function updateCart() {
-        const list = document.getElementById('cartItemsList');
-        let total = 0;
+    function showPopup() {
+        let p = document.getElementById('cart-popup');
+        p.style.display = 'block';
+        setTimeout(() => p.style.display = 'none', 2000);
+    }
+
+    function updateUI() {
+        const list = document.getElementById('cartList');
+        const footer = document.getElementById('cart-footer');
+        const empty = document.getElementById('empty-msg');
+        let total = 0, count = 0;
+
         list.innerHTML = "";
-        cart.forEach(item => {
-            total += item.price;
-            list.innerHTML += `<div class="d-flex justify-content-between mb-2 border-bottom pb-1">
-                <span class="small">${item.title}</span>
-                <span class="text-danger small">Rs. ${item.price}</span>
-            </div>`;
-        });
+        if(cart.length === 0) {
+            empty.style.display = "block"; footer.style.display = "none";
+        } else {
+            empty.style.display = "none"; footer.style.display = "block";
+            cart.forEach((item, index) => {
+                total += item.price * item.qty;
+                count += item.qty;
+                list.innerHTML += `
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <div style="width: 60%;"><div class="fw-bold small">${item.title}</div><div class="text-danger small">Rs. ${item.price * item.qty}</div></div>
+                    <div class="qty-control"><button class="qty-btn" onclick="updateQty(${index},-1)">-</button><span class="mx-2 small">${item.qty}</span><button class="qty-btn" onclick="updateQty(${index},1)">+</button></div>
+                </div>`;
+            });
+        }
         document.getElementById('totalPrice').innerText = total;
-        document.getElementById('cart-count').innerText = cart.length;
+        document.getElementById('cart-count').innerText = count;
+    }
+
+    function updateQty(index, amt) {
+        cart[index].qty += amt;
+        if(cart[index].qty <= 0) cart.splice(index, 1);
+        updateUI();
     }
 
     function toggleCart() {
-        let cp = document.getElementById('cartPanel');
-        cp.style.display = (cp.style.display === 'block') ? 'none' : 'block';
+        let p = document.getElementById('cartPanel');
+        p.style.display = (p.style.display === 'block') ? 'none' : 'block';
     }
 
     function sendWhatsApp() {
-        let n = document.getElementById('custName').value;
-        let a = document.getElementById('custAddr').value;
-        if(!n || !a || cart.length === 0) { alert("Complete all details!"); return; }
+        let n = document.getElementById('custName').value, a = document.getElementById('custAddr').value;
+        if(!n || !a) { alert("Fill name and address!"); return; }
         let msg = `*Order: Khushal Fabric*%0AName: ${n}%0AAddress: ${a}%0A%0AItems:%0A`;
-        cart.forEach(i => msg += `- ${i.title} : Rs.${i.price}%0A`);
+        cart.forEach(i => msg += `- ${i.title} (x${i.qty}) : Rs.${i.price*i.qty}%0A`);
         msg += `%0A*Total: Rs. ${document.getElementById('totalPrice').innerText}*`;
         window.open(`https://wa.me/923490162829?text=${msg}`);
     }
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
