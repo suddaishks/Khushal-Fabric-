@@ -50,20 +50,25 @@
         /* Gallery Modal Zoom */
         .modal-content { background: rgba(0,0,0,0.9); border: none; }
         .carousel-item img { max-height: 80vh; object-fit: contain; }
+/* موبائل پر گیلری اور سلائیڈر کو ٹھیک کرنے کے لیے */
+@media (max-width: 576px) { 
+    #cartPanel { width: 100%; } 
+    .col-6 { padding: 5px; }
+    .img-box img { height: 210px; }
 
-        @media (max-width: 576px) { 
-            #cartPanel { width: 100%; } 
-            .col-6 { padding: 5px; }
-            .img-box img { height: 210px; }
-        }
-/* موبائل پر بینر کو بالکل فٹ کرنے کے لیے */
-@media (max-width: 576px) {
+    /* یہ حصہ آپ کی گیلری کو پرانا جیسا صاف کر دے گا */
     .carousel-item img {
-        height: auto !important; /* ہائٹ فکس ختم کر دی */
-        aspect-ratio: 16 / 9; /* تصویر کا رزلٹ خراب نہیں ہوگا */
-        object-fit: contain; /* پوری تصویر نظر آئے گی، کٹے گی نہیں */
-        background-color: #000; /* اگر سائیڈ سے جگہ بچی تو کالی نظر آئے گی */
+        height: auto !important; 
+        max-height: 80vh; /* تصویر سکرین کے حساب سے سیٹ رہے گی */
+        object-fit: cover !important; /* کالی پٹیاں ختم ہو جائیں گی */
+        background-color: transparent !important; /* بیک گراؤنڈ صاف ہو جائے گا */
     }
+    
+    #heroSlider {
+        margin-bottom: 10px !important;
+    }
+}
+
     
     #heroSlider {
         margin-bottom: 10px !important;
