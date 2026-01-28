@@ -56,6 +56,23 @@
             .col-6 { padding: 5px; }
             .img-box img { height: 210px; }
         }
+/* موبائل پر بینر کو بالکل فٹ کرنے کے لیے */
+@media (max-width: 576px) {
+    .carousel-item img {
+        height: auto !important; /* ہائٹ فکس ختم کر دی */
+        aspect-ratio: 16 / 9; /* تصویر کا رزلٹ خراب نہیں ہوگا */
+        object-fit: contain; /* پوری تصویر نظر آئے گی، کٹے گی نہیں */
+        background-color: #000; /* اگر سائیڈ سے جگہ بچی تو کالی نظر آئے گی */
+    }
+    
+    #heroSlider {
+        margin-bottom: 10px !important;
+    }
+}
+
+
+
+        
     </style>
 </head>
 <body>
