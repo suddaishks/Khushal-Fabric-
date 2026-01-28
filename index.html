@@ -86,59 +86,86 @@
 </div>
 
 <div class="container mb-5">
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
-        <button class="filter-btn" onclick="filterProducts('alkaram', this)">Al-Karam</button>
-        <button class="filter-btn" onclick="filterProducts('khaddar', this)">Khaddar</button>
-        <button class="filter-btn" onclick="filterProducts('luxury', this)">Luxury</button>
-    </div>
+<div class="filter-container mt-4">
+    <button class="filter-btn active" onclick="filterBrands('all', this)">All Brands</button>
+    <button class="filter-btn" onclick="filterBrands('mtj', this)">MTJ</button>
+    <button class="filter-btn" onclick="filterBrands('binsaeed', this)">Bin Saeed</button>
+    <button class="filter-btn" onclick="filterBrands('salina', this)">Salina</button>
+</div>
 
-    <div class="row g-4" id="productGrid">
+<div class="container mb-5">
+    <div class="row g-4" id="catalogGrid">
         
-        <div class="col-md-4 col-6 product-item alkaram">
-            <div class="product-card" onclick="openProduct('LAURE Digital Printed', [
-                {color: 'White', price: 3143, image: 'suite1.jpg'},
-                {color: 'Black', price: 3143, image: 'black_suit.jpg'}
-            ])">
-                <div class="badge-colors">+2 COLORS</div>
-                <img src="suite1.jpg" alt="Product">
-                <div class="product-body">
-                    <h6>LAURE Digital Printed</h6>
-                    <span class="old-price">Rs. 4,490</span>
-                    <span class="price-tag">Rs. 3,143</span>
-                    <p class="small text-muted mt-2">Click to view colors</p>
+        <div class="col-md-6 brand-item mtj">
+            <div class="card p-3 shadow-sm border-0" style="background: #fdfdfd; border-radius: 20px;">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-primary text-white p-3 rounded-circle me-3"><i class="fa fa-file-pdf fs-4"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">MTJ BY MOLANA TARIQ JAMIL</h5>
+                        <small class="text-muted">Digital Printed Lawn 3PC - 2026</small>
+                    </div>
+                </div>
+                <p class="small text-secondary">10 Colors & Designs | Digital Printed Lawn Shirt, Dupatta & Trouser</p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-light text-dark border">Wholesale: Rs. 2350</span>
+                    <span class="text-danger fw-bold">Retail: Rs. 4590</span>
+                </div>
+                <a href="mtj-summer-2026.pdf" target="_blank" class="btn btn-outline-dark w-100 mb-2">VIEW PDF CATALOG</a>
+                
+                <div class="input-group">
+                    <input type="text" id="mtj-color" class="form-control" placeholder="Enter Color Name/No.">
+                    <button class="btn btn-success" onclick="addWithColor('MTJ 3PC', 2350, 'mtj-color')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4 col-6 product-item luxury">
-            <div class="product-card" onclick="openProduct('Luxury Embroidered Suit', [
-                {color: 'Original', price: 5800, image: 'suite2.jpg'}
-            ])">
-                <img src="suite2.jpg" alt="Product">
-                <div class="product-body">
-                    <h6>Luxury Embroidered Suit</h6>
-                    <span class="old-price">Rs. 7,200</span>
-                    <span class="price-tag">Rs. 5,800</span>
+        <div class="col-md-6 brand-item binsaeed">
+            <div class="card p-3 shadow-sm border-0" style="background: #fdfdfd; border-radius: 20px;">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-danger text-white p-3 rounded-circle me-3"><i class="fa fa-file-pdf fs-4"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">BIN SAEED LUXURY</h5>
+                        <small class="text-muted">Luxury Embroidered Collection</small>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-6 product-item khaddar">
-            <div class="product-card" onclick="openProduct('Digital Khaddar 3PC', [
-                {color: 'Design A', price: 3143, image: 'suite3.jpg'}
-            ])">
-                <img src="suite3.jpg" alt="Product">
-                <div class="product-body">
-                    <h6>Digital Khaddar 3PC</h6>
-                    <span class="old-price">Rs. 4,500</span>
-                    <span class="price-tag">Rs. 3,143</span>
+                <p class="small text-secondary">Premium Luxury Collection with heavy embroidery.</p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-light text-dark border">Wholesale: Rs. 2600</span>
+                    <span class="text-danger fw-bold">Retail: Rs. 3799</span>
+                </div>
+                <a href="bin-saeed-luxury.pdf" target="_blank" class="btn btn-outline-dark w-100 mb-2">VIEW PDF CATALOG</a>
+                
+                <div class="input-group">
+                    <input type="text" id="bs-color" class="form-control" placeholder="Enter Design Name">
+                    <button class="btn btn-success" onclick="addWithColor('Bin Saeed Luxury', 2600, 'bs-color')">Add to Bag</button>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
+
+<script>
+// برانڈز کو فلٹر کرنے کا فنکشن
+function filterBrands(brand, btn) {
+    document.querySelectorAll('.brand-item').forEach(item => {
+        item.style.display = (brand === 'all' || item.classList.contains(brand)) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+// کلر کے ساتھ کارٹ میں ڈالنے کا فنکشن
+function addWithColor(name, price, inputId) {
+    let colorVal = document.getElementById(inputId).value;
+    if(!colorVal) {
+        alert("Please enter the color or design number from PDF!");
+        return;
+    }
+    addToCart(name + " - Color: " + colorVal, price);
+    document.getElementById(inputId).value = ''; // Clear input
+}
+</script>
 
 <div id="cartPanel">
     <div class="d-flex justify-content-between align-items-center mb-4">
